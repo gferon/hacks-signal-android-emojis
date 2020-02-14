@@ -1,0 +1,277 @@
+{% raw %}
+package org.thoughtcrime.securesms.components.emoji;
+
+import org.thoughtcrime.securesms.R;
+import org.whispersystems.libsignal.util.Pair;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+class EmojiPages {
+{% endraw %}
+
+    {%- for group, page_chunks in all_page_chunks.items() -%}
+    {%- for page_chunk_emojis in page_chunks %}
+    private static final EmojiPageModel PAGE_{{ group | upper }}_{{ loop.index0 }} = new StaticEmojiPageModel(R.attr.emoji_category_{{ group | lower }}, new Emoji[]{
+        {% for emoji in page_chunk_emojis -%}new Emoji(
+                {%- for variations in emoji -%}
+                    "{% for codepoint in variations %}\u{{ '%04x' | format(codepoint) }}{% endfor %}"{{- ", " if not loop.last -}}
+                {%- endfor -%}){{- ", " if not loop.last -}}
+        {% endfor %}
+    }, "emoji/{{ group | lower }}_{{ loop.index - 1 }}.webp");
+    {%- endfor -%}
+    {% endfor %}
+
+
+    static final List<EmojiPageModel> DATA_PAGES = Arrays.asList({%- for group, page_chunks in all_page_chunks.items() -%}
+    {%- for sprite_sheet_emojis in page_chunks -%}
+        PAGE_{{ group | upper }}_{{ loop.index0 }}{{ "," if not loop.last }}
+    {%- endfor %}{{ "," if not loop.last }}
+    {%- endfor %});
+
+
+{% raw %}
+
+    private static final EmojiPageModel PAGE_PEOPLE_AND_BODY = new CompositeEmojiPageModel(R.attr.emoji_category_people_and_body, PAGE_PEOPLE_AND_BODY_0, PAGE_PEOPLE_AND_BODY_1, PAGE_PEOPLE_AND_BODY_2, PAGE_PEOPLE_AND_BODY_3, PAGE_PEOPLE_AND_BODY_4);
+
+
+    private static final EmojiPageModel PAGE_EMOTICONS = new StaticEmojiPageModel(R.attr.emoji_category_smileys_and_emotions, new String[]{
+            ":-)", ";-)", "(-:", ":->", ":-D", "\\o/",
+            ":-P", "B-)", ":-$", ":-*", "O:-)", "=-O",
+            "O_O", "O_o", "o_O", ":O", ":-!", ":-x",
+            ":-|", ":-\\", ":-(", ":'(", ":-[", ">:-(",
+            "^.^", "^_^", "\\(\u02c6\u02da\u02c6)/",
+            "\u30fd(\u00b0\u25c7\u00b0 )\u30ce", "\u00af\\(\u00b0_o)/\u00af",
+            "\u00af\\_(\u30c4)_/\u00af", "(\u00ac_\u00ac)",
+            "(>_<)", "(\u2565\ufe4f\u2565)", "(\u261e\uff9f\u30ee\uff9f)\u261e",
+            "\u261c(\uff9f\u30ee\uff9f\u261c)", "\u261c(\u2312\u25bd\u2312)\u261e",
+            "(\u256f\u00b0\u25a1\u00b0)\u256f\ufe35", "\u253b\u2501\u253b",
+            "\u252c\u2500\u252c", "\u30ce(\u00b0\u2013\u00b0\u30ce)",
+            "(^._.^)\uff89", "\u0e05^\u2022\ufecc\u2022^\u0e05",
+            "\u0295\u2022\u1d25\u2022\u0294", "(\u2022_\u2022)",
+            " \u25a0-\u25a0\u00ac <(\u2022_\u2022) ", "(\u25a0_\u25a0\u00ac)",
+            "\u01aa(\u0693\u05f2)\u200e\u01aa\u200b\u200b"
+    }, null);
+
+    static final List<EmojiPageModel> DISPLAY_PAGES = Arrays.asList(PAGE_PEOPLE_AND_BODY,
+                                                                  PAGE_ANIMALS_AND_NATURE_0,
+                                                                  PAGE_FOOD_AND_DRINK_0,
+                                                                  PAGE_ACTIVITIES_0,
+                                                                  PAGE_TRAVEL_AND_PLACES_0,
+                                                                  PAGE_OBJECTS_0,
+                                                                  PAGE_SYMBOLS_0,
+                                                                  PAGE_FLAGS_0,
+                                                                  PAGE_EMOTICONS);
+
+
+
+    static final List<Pair<String, String>> OBSOLETE = new LinkedList<Pair<String, String>>() {{
+        add(new Pair<>("\ud83d\udc6e", "\ud83d\udc6e\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc6e\ud83c\udffb", "\ud83d\udc6e\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc6e\ud83c\udffc", "\ud83d\udc6e\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc6e\ud83c\udffd", "\ud83d\udc6e\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc6e\ud83c\udffe", "\ud83d\udc6e\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc6e\ud83c\udfff", "\ud83d\udc6e\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udd75\ufe0f", "\ud83d\udd75\ufe0f\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udd75\ud83c\udffb", "\ud83d\udd75\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udd75\ud83c\udffc", "\ud83d\udd75\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udd75\ud83c\udffd", "\ud83d\udd75\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udd75\ud83c\udffe", "\ud83d\udd75\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udd75\ud83c\udfff", "\ud83d\udd75\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc82", "\ud83d\udc82\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc82\ud83c\udffb", "\ud83d\udc82\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc82\ud83c\udffc", "\ud83d\udc82\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc82\ud83c\udffd", "\ud83d\udc82\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc82\ud83c\udffe", "\ud83d\udc82\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc82\ud83c\udfff", "\ud83d\udc82\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc77", "\ud83d\udc77\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc77\ud83c\udffb", "\ud83d\udc77\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc77\ud83c\udffc", "\ud83d\udc77\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc77\ud83c\udffd", "\ud83d\udc77\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc77\ud83c\udffe", "\ud83d\udc77\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc77\ud83c\udfff", "\ud83d\udc77\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc73", "\ud83d\udc73\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc73\ud83c\udffb", "\ud83d\udc73\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc73\ud83c\udffc", "\ud83d\udc73\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc73\ud83c\udffd", "\ud83d\udc73\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc73\ud83c\udffe", "\ud83d\udc73\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc73\ud83c\udfff", "\ud83d\udc73\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc71", "\ud83d\udc71\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc71\ud83c\udffb", "\ud83d\udc71\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc71\ud83c\udffc", "\ud83d\udc71\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc71\ud83c\udffd", "\ud83d\udc71\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc71\ud83c\udffe", "\ud83d\udc71\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc71\ud83c\udfff", "\ud83d\udc71\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddd9", "\ud83e\uddd9\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd9\ud83c\udffb", "\ud83e\uddd9\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd9\ud83c\udffc", "\ud83e\uddd9\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd9\ud83c\udffd", "\ud83e\uddd9\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd9\ud83c\udffe", "\ud83e\uddd9\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd9\ud83c\udfff", "\ud83e\uddd9\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddda", "\ud83e\uddda\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddda\ud83c\udffb", "\ud83e\uddda\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddda\ud83c\udffc", "\ud83e\uddda\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddda\ud83c\udffd", "\ud83e\uddda\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddda\ud83c\udffe", "\ud83e\uddda\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddda\ud83c\udfff", "\ud83e\uddda\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\udddb", "\ud83e\udddb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\udddb\ud83c\udffb", "\ud83e\udddb\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\udddb\ud83c\udffc", "\ud83e\udddb\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\udddb\ud83c\udffd", "\ud83e\udddb\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\udddb\ud83c\udffe", "\ud83e\udddb\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\udddb\ud83c\udfff", "\ud83e\udddb\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\udddc", "\ud83e\udddc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddc\ud83c\udffb", "\ud83e\udddc\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddc\ud83c\udffc", "\ud83e\udddc\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddc\ud83c\udffd", "\ud83e\udddc\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddc\ud83c\udffe", "\ud83e\udddc\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddc\ud83c\udfff", "\ud83e\udddc\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddd", "\ud83e\udddd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddd\ud83c\udffb", "\ud83e\udddd\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddd\ud83c\udffc", "\ud83e\udddd\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddd\ud83c\udffd", "\ud83e\udddd\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddd\ud83c\udffe", "\ud83e\udddd\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddd\ud83c\udfff", "\ud83e\udddd\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddde", "\ud83e\uddde\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\udddf", "\ud83e\udddf\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\ude4d", "\ud83d\ude4d\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4d\ud83c\udffb", "\ud83d\ude4d\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4d\ud83c\udffc", "\ud83d\ude4d\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4d\ud83c\udffd", "\ud83d\ude4d\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4d\ud83c\udffe", "\ud83d\ude4d\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4d\ud83c\udfff", "\ud83d\ude4d\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4e", "\ud83d\ude4e\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4e\ud83c\udffb", "\ud83d\ude4e\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4e\ud83c\udffc", "\ud83d\ude4e\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4e\ud83c\udffd", "\ud83d\ude4e\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4e\ud83c\udffe", "\ud83d\ude4e\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4e\ud83c\udfff", "\ud83d\ude4e\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude45", "\ud83d\ude45\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude45\ud83c\udffb", "\ud83d\ude45\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude45\ud83c\udffc", "\ud83d\ude45\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude45\ud83c\udffd", "\ud83d\ude45\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude45\ud83c\udffe", "\ud83d\ude45\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude45\ud83c\udfff", "\ud83d\ude45\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude46", "\ud83d\ude46\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude46\ud83c\udffb", "\ud83d\ude46\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude46\ud83c\udffc", "\ud83d\ude46\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude46\ud83c\udffd", "\ud83d\ude46\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude46\ud83c\udffe", "\ud83d\ude46\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude46\ud83c\udfff", "\ud83d\ude46\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc81", "\ud83d\udc81\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc81\ud83c\udffb", "\ud83d\udc81\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc81\ud83c\udffc", "\ud83d\udc81\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc81\ud83c\udffd", "\ud83d\udc81\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc81\ud83c\udffe", "\ud83d\udc81\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc81\ud83c\udfff", "\ud83d\udc81\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4b", "\ud83d\ude4b\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4b\ud83c\udffb", "\ud83d\ude4b\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4b\ud83c\udffc", "\ud83d\ude4b\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4b\ud83c\udffd", "\ud83d\ude4b\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4b\ud83c\udffe", "\ud83d\ude4b\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude4b\ud83c\udfff", "\ud83d\ude4b\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\ude47", "\ud83d\ude47\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\ude47\ud83c\udffb", "\ud83d\ude47\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\ude47\ud83c\udffc", "\ud83d\ude47\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\ude47\ud83c\udffd", "\ud83d\ude47\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\ude47\ud83c\udffe", "\ud83d\ude47\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\ude47\ud83c\udfff", "\ud83d\ude47\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc86", "\ud83d\udc86\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc86\ud83c\udffb", "\ud83d\udc86\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc86\ud83c\udffc", "\ud83d\udc86\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc86\ud83c\udffd", "\ud83d\udc86\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc86\ud83c\udffe", "\ud83d\udc86\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc86\ud83c\udfff", "\ud83d\udc86\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc87", "\ud83d\udc87\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc87\ud83c\udffb", "\ud83d\udc87\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc87\ud83c\udffc", "\ud83d\udc87\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc87\ud83c\udffd", "\ud83d\udc87\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc87\ud83c\udffe", "\ud83d\udc87\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udc87\ud83c\udfff", "\ud83d\udc87\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83d\udeb6", "\ud83d\udeb6\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb6\ud83c\udffb", "\ud83d\udeb6\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb6\ud83c\udffc", "\ud83d\udeb6\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb6\ud83c\udffd", "\ud83d\udeb6\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb6\ud83c\udffe", "\ud83d\udeb6\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb6\ud83c\udfff", "\ud83d\udeb6\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc3", "\ud83c\udfc3\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc3\ud83c\udffb", "\ud83c\udfc3\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc3\ud83c\udffc", "\ud83c\udfc3\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc3\ud83c\udffd", "\ud83c\udfc3\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc3\ud83c\udffe", "\ud83c\udfc3\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc3\ud83c\udfff", "\ud83c\udfc3\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc6f", "\ud83d\udc6f\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd6", "\ud83e\uddd6\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddd6\ud83c\udffb", "\ud83e\uddd6\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddd6\ud83c\udffc", "\ud83e\uddd6\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddd6\ud83c\udffd", "\ud83e\uddd6\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddd6\ud83c\udffe", "\ud83e\uddd6\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddd6\ud83c\udfff", "\ud83e\uddd6\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83e\uddd7", "\ud83e\uddd7\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd7\ud83c\udffb", "\ud83e\uddd7\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd7\ud83c\udffc", "\ud83e\uddd7\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd7\ud83c\udffd", "\ud83e\uddd7\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd7\ud83c\udffe", "\ud83e\uddd7\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd7\ud83c\udfff", "\ud83e\uddd7\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd8", "\ud83e\uddd8\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd8\ud83c\udffb", "\ud83e\uddd8\ud83c\udffb\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd8\ud83c\udffc", "\ud83e\uddd8\ud83c\udffc\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd8\ud83c\udffd", "\ud83e\uddd8\ud83c\udffd\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd8\ud83c\udffe", "\ud83e\uddd8\ud83c\udffe\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83e\uddd8\ud83c\udfff", "\ud83e\uddd8\ud83c\udfff\u200d\u2640\ufe0f"));
+        add(new Pair<>("\ud83c\udfcc\ufe0f", "\ud83c\udfcc\ufe0f\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcc\ud83c\udffb", "\ud83c\udfcc\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcc\ud83c\udffc", "\ud83c\udfcc\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcc\ud83c\udffd", "\ud83c\udfcc\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcc\ud83c\udffe", "\ud83c\udfcc\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcc\ud83c\udfff", "\ud83c\udfcc\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc4", "\ud83c\udfc4\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc4\ud83c\udffb", "\ud83c\udfc4\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc4\ud83c\udffc", "\ud83c\udfc4\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc4\ud83c\udffd", "\ud83c\udfc4\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc4\ud83c\udffe", "\ud83c\udfc4\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfc4\ud83c\udfff", "\ud83c\udfc4\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udea3", "\ud83d\udea3\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udea3\ud83c\udffb", "\ud83d\udea3\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udea3\ud83c\udffc", "\ud83d\udea3\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udea3\ud83c\udffd", "\ud83d\udea3\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udea3\ud83c\udffe", "\ud83d\udea3\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udea3\ud83c\udfff", "\ud83d\udea3\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfca", "\ud83c\udfca\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfca\ud83c\udffb", "\ud83c\udfca\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfca\ud83c\udffc", "\ud83c\udfca\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfca\ud83c\udffd", "\ud83c\udfca\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfca\ud83c\udffe", "\ud83c\udfca\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfca\ud83c\udfff", "\ud83c\udfca\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\u26f9\ufe0f", "\u26f9\ufe0f\u200d\u2642\ufe0f"));
+        add(new Pair<>("\u26f9\ud83c\udffb", "\u26f9\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\u26f9\ud83c\udffc", "\u26f9\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\u26f9\ud83c\udffd", "\u26f9\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\u26f9\ud83c\udffe", "\u26f9\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\u26f9\ud83c\udfff", "\u26f9\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcb\ufe0f", "\ud83c\udfcb\ufe0f\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcb\ud83c\udffb", "\ud83c\udfcb\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcb\ud83c\udffc", "\ud83c\udfcb\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcb\ud83c\udffd", "\ud83c\udfcb\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcb\ud83c\udffe", "\ud83c\udfcb\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83c\udfcb\ud83c\udfff", "\ud83c\udfcb\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb4", "\ud83d\udeb4\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb4\ud83c\udffb", "\ud83d\udeb4\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb4\ud83c\udffc", "\ud83d\udeb4\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb4\ud83c\udffd", "\ud83d\udeb4\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb4\ud83c\udffe", "\ud83d\udeb4\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb4\ud83c\udfff", "\ud83d\udeb4\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb5", "\ud83d\udeb5\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb5\ud83c\udffb", "\ud83d\udeb5\ud83c\udffb\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb5\ud83c\udffc", "\ud83d\udeb5\ud83c\udffc\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb5\ud83c\udffd", "\ud83d\udeb5\ud83c\udffd\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb5\ud83c\udffe", "\ud83d\udeb5\ud83c\udffe\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udeb5\ud83c\udfff", "\ud83d\udeb5\ud83c\udfff\u200d\u2642\ufe0f"));
+        add(new Pair<>("\ud83d\udc8f", "\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d\udc8b\u200d\ud83d\udc68"));
+        add(new Pair<>("\ud83d\udc91", "\ud83d\udc69\u200d\u2764\ufe0f\u200d\ud83d\udc68"));
+        add(new Pair<>("\ud83d\udc6a", "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc66"));
+    }};
+}
+
+{% endraw %}
