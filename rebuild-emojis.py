@@ -27,7 +27,9 @@ def noto_filenames(code_points: list):
     code_points = [f"{c:0{4}x}" for c in code_points]
     return [
         "emoji_u" + "_".join(code_points) + ".svg.png",
+        "emoji_u" + "_".join(code_points) + ".png",
         "emoji_u" + "_".join([c for c in code_points if c != "fe0f"]) + ".svg.png",
+        "emoji_u" + "_".join([c for c in code_points if c != "fe0f"]) + ".png",
     ]
 
 
@@ -36,9 +38,7 @@ def load_emoji(code_points: list, emoji_dir, emoji_filenames):
         emoji_filepath = os.path.join(emoji_dir, emoji_filename)
         if os.path.isfile(emoji_filepath):
             return Image.open(emoji_filepath)
-
-    print("failed to load emoji:")
-    print_codepoint(code_points)
+    print("failed to load emoji: " + emoji_filename)
 
 
 def get_pages(emojis):
@@ -58,12 +58,12 @@ def get_pages(emojis):
             if e[0] in parent_code_points:
                 return idx
 
-        # print(f"failed to find parent of {emoji.name} with {repr(emoji)} from {repr_codepoints(parent_code_points[1])}")
         return None
 
 
     failed_count = 0
     for emoji in filter(lambda e: e.status == Status.FULLY_QUALIFIED and e.group != Group.COMPONENT, result.emoji):
+        print(f"{emoji.name}: {codepoint_to_str(emoji.codePoints)}")
         if emoji.skinTones != [SkinTone.NONE]:
             # search for the parent emoji
             idx = find_parent_emoji_index(emoji)
@@ -75,11 +75,12 @@ def get_pages(emojis):
             pages[emoji.group.name].append(
                 [emoji.codePoints]
             )
+
     return pages
 
 
-def print_codepoint(code_point):
-    print(" ".join([f"{c:0{4}X}" for c in code_point]))
+def codepoint_to_str(code_point):
+    return " ".join([f"{c:0{4}X}" for c in code_point])
 
 
 if __name__ == "__main__":
@@ -121,6 +122,8 @@ if __name__ == "__main__":
         chunk_idx = 0
         chunks = [[]]
         for emoji in page:
+            if not load_emoji(emoji[0], args.emojis, emoji_filenames):
+                print("skipping emoji because I can't load it")
             count += len(emoji)
             if count >= chunk_size:
                 chunks.append([])
